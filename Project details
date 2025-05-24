@@ -1,0 +1,52 @@
+# LMIA ETL Automation Project Report
+
+## 1. Project Purpose
+
+The LMIA ETL Automation Project was developed to streamline and automate the process of extracting, transforming, and loading (ETL) Labour Market Impact Assessment (LMIA) data associated with Canada’s Temporary Foreign Worker Program (TFWP). The LMIA process is a critical step for Canadian employers who wish to hire foreign workers, as it assesses the impact of such hires on the Canadian labor market. By automating the ETL pipeline, this project aims to provide a reliable, efficient, and repeatable method for preparing LMIA data for analysis and visualization, thereby supporting data-driven decision-making for policymakers, researchers, and employers.
+
+## 2. Project Workflow and Implementation
+
+### 2.1 Data Extraction
+
+The project begins by loading raw LMIA data from a CSV file. This step is handled by the `load_data` function, which reads the CSV into a pandas DataFrame. The data typically contains information about employers, occupations, locations, and the status of LMIA applications.
+
+### 2.2 Data Transformation
+
+Once loaded, the data undergoes a cleaning process using the `clean_data` function. This transformation step includes:
+- **Removing Duplicate Records:** Ensures that each LMIA entry is unique, preventing skewed analysis due to repeated data.
+- **Handling Missing Values:** Specifically, missing values in the 'Incorporate Status' column are filled with 'Unknown' to maintain consistency and avoid null-related errors in subsequent analysis.
+
+### 2.3 Data Loading
+
+After cleaning, the data is saved in two formats:
+- **Processed CSV File:** The cleaned data is exported to a new CSV file for easy sharing and backup.
+- **SQLite Database:** The data is also loaded into a SQLite database (`lmia_analysis.db`) using the `save_to_db` function. This structured storage allows for efficient querying and integration with analytical tools.
+
+### 2.4 Data Analysis
+
+The analysis phase retrieves the cleaned data from the SQLite database using the `fetch_data` function. The `basic_report` function then generates summary statistics and insights, such as:
+- The total number of LMIA applications processed.
+- The distribution of applications by occupation, province, or employer.
+- Trends in LMIA approvals and rejections.
+
+### 2.5 Data Visualization
+
+The visualization component, implemented in the `plot_top_occupations` function, creates a bar chart of the top occupations receiving LMIA grants. This visual representation helps users quickly identify which job categories are most in demand for foreign workers in Canada.
+
+## 3. Problem Statement and Solution
+
+### 3.1 Problem Addressed
+
+Prior to this project, the process of preparing LMIA data for analysis was manual, time-consuming, and error-prone. Data inconsistencies, missing values, and lack of automation made it difficult to generate timely and accurate reports. This hindered the ability of stakeholders to make informed decisions regarding labor market policies and workforce planning.
+
+### 3.2 Solution Provided
+
+By automating the ETL process, this project eliminates manual intervention, reduces the risk of human error, and ensures that the data is always up-to-date and analysis-ready. The use of a SQLite database further enhances data accessibility and supports advanced querying for deeper insights.
+
+## 4. Insights from Visualization
+
+The visualization produced by the project highlights the top occupations that receive the highest number of LMIA grants. This information is crucial for understanding labor shortages and employer needs across Canada. For example, if the visualization shows that certain skilled trades or healthcare positions dominate the LMIA grants, it indicates areas where domestic labor supply may be insufficient, guiding both policy and educational program development.
+
+## 5. Conclusion
+
+In summary, the LMIA ETL Automation Project provides a comprehensive, automated solution for preparing, analyzing, and visualizing LMIA data. It supports evidence-based decision-making and helps stakeholders respond proactively to labor market trends in Canada.
